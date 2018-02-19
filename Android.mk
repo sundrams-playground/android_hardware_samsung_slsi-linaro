@@ -14,9 +14,11 @@
 # limitations under the License.
 #
 
+ifeq ($(TARGET_SLSI_VARIANT),linaro)
 ifeq ($(TARGET_SOC_BASE), exynos9830)
 interfaces_dirs := \
 	libGeoTrans/1.0
 
 include $(call all-named-subdir-makefiles,$(interfaces_dirs))
+endif
 endif
