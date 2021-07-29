@@ -25,6 +25,9 @@ endif
 LOCAL_SHARED_LIBRARIES := liblog libcutils libhardware \
 	libhardware_legacy libutils libsync libacryl libui libion_exynos libion libexynosgraphicbuffer libdrmresource libdrm \
 
+LOCAL_SHARED_LIBRARIES += \
+	libprocessgroup
+
 LOCAL_HEADER_LIBRARIES := libhardware_legacy_headers libbinder_headers libexynos_headers
 LOCAL_STATIC_LIBRARIES += libVendorVideoApi
 LOCAL_PROPRIETARY_MODULE := true
