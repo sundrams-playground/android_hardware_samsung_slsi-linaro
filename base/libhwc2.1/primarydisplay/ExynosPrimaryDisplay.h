@@ -34,6 +34,10 @@ class ExynosPrimaryDisplay : public ExynosDisplay {
 
     virtual void checkLayersForSettingDR();
 
+    virtual int32_t setBootDisplayConfig(int32_t config) override;
+    virtual int32_t clearBootDisplayConfig() override;
+    virtual int32_t getPreferredDisplayConfigInternal(int32_t *outConfig) override;
+
     std::vector<ResolutionInfo> mResolutionInfo;
 
   protected:
