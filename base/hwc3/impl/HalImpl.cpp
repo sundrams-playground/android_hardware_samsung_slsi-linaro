@@ -406,7 +406,7 @@ int32_t HalImpl::getDisplayedContentSamplingAttributes(
 int32_t HalImpl::getDisplayPhysicalOrientation([[maybe_unused]] int64_t display,
                                                [[maybe_unused]] common::Transform* orientation) {
     // TODO(b/214461751): return the physical orientation of the display
-    return HWC2_ERROR_UNSUPPORTED;
+    return HWC2_ERROR_NONE;
 }
 
 int32_t HalImpl::getDozeSupport(int64_t display, bool* support) {
