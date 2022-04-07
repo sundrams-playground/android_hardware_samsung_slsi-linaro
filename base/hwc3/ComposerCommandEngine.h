@@ -16,9 +16,10 @@
 
 #pragma once
 
+#include <android/hardware/graphics/composer3/ComposerServiceWriter.h>
+
 #include <memory>
 
-#include "ComposerServiceWriter.h"
 #include "include/IComposerHal.h"
 #include "include/IResourceManager.h"
 
