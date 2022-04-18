@@ -16,7 +16,6 @@
 
 cc_test {
     name: "tsmux_test_m2m_1000",
-    clang: true,
     proprietary: true,
     cflags: [ "-g", "-Werror", "-DM2M" ],
     include_dirs: [
@@ -31,7 +30,6 @@ cc_test {
 
 cc_test {
     name: "tsmux_test_otf_hdcp_disable_1000",
-    clang: true,
     proprietary: true,
     cflags: [ "-g", "-Werror", "-DOTF" ],
     include_dirs: [
@@ -46,7 +44,6 @@ cc_test {
 
 cc_test {
     name: "tsmux_test_otf_hdcp_enable_1000",
-    clang: true,
     proprietary: true,
     cflags: [ "-g", "-Werror", "-DOTF" ],
     include_dirs: [

@@ -16,7 +16,6 @@
 
 cc_test {
     name: "iontests",
-    clang: true,
     vendor: true,
     proprietary: true,
     cflags: [ "-g", "-Werror" ],

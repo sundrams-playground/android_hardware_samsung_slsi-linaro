@@ -16,7 +16,6 @@
 
 cc_test {
     name: "repeater_asb_test_9820",
-    clang: true,
     proprietary: true,
     cflags: [ "-g", "-Werror" ],
     include_dirs: [ "hardware/samsung_slsi-linaro/graphics/base/librepeater/include" ],
