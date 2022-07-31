@@ -162,6 +162,7 @@ int32_t ExynosDisplayFbInterface::getDPUConfig(hwc2_config_t *config) {
 int32_t ExynosDisplayFbInterface::setActiveConfig(hwc2_config_t config,
                                                   displayConfigs_t &displayConfig) {
     int ret = 0;
+#if defined(USE_DPU_SET_CONFIG) || defined(USES_SET_DISPLAY_MODE_IOCTL)
 #ifdef USE_DPU_SET_CONFIG
     /* Use win_config ioctl */
     struct decon_win_config_data win_data;
@@ -183,16 +184,28 @@ int32_t ExynosDisplayFbInterface::setActiveConfig(hwc2_config_t config,
     if (ret < 0) {
         ALOGE("%s S3CFB_WIN_CONFIG failed errno : %d, ret: %d", __func__, errno, ret);
     }
+#elif defined(USES_SET_DISPLAY_MODE_IOCTL)
+    struct decon_display_mode display_mode;
+    memset(&display_mode, 0, sizeof(decon_display_mode));
+    display_mode.index = config;
+    display_mode.width = displayConfig.width;
+    display_mode.height = displayConfig.height;
+    display_mode.fps = (int)(1000000000 / displayConfig.vsyncPeriod);
+
+    if ((ret = ioctl(mDisplayFd, EXYNOS_SET_DISPLAY_MODE, &display_mode)) < 0) {
+        ALOGE("%s EXYNOS_SET_DISPLAY_MODE failed errno : %d, ret: %d", __func__, errno, ret);
+    }
+#endif
 
     /* Those variables should be updated before updateDSCBlockSize() call */
-    bool sizeChanged = (mXres != displayConfig.width || mYres != displayConfig.height) ? true : false;
+    bool sizeChanged = mXres != displayConfig.width || mYres != displayConfig.height;
     mXres = displayConfig.width;
     mYres = displayConfig.height;
 
-    /* Update DSC block size for window upate if resolution is changed */
+    /* Update DSC block size for window update if resolution is changed */
     if (sizeChanged)
         updateDSCBlockSize();
-#endif
+#endif /* USE_DPU_SET_CONFIG || USES_SET_DISPLAY_MODE_IOCTL */
 
     return ret;
 }
