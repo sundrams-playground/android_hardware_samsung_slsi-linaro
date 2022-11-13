@@ -17,6 +17,8 @@
 #ifndef _EXYNOSDISPLAY_H
 #define _EXYNOSDISPLAY_H
 
+#include <fstream>
+
 #include <utils/Vector.h>
 #include <utils/KeyedVector.h>
 #include <system/graphics.h>
@@ -38,7 +40,6 @@
 #endif
 
 #define HWC_PRINT_FRAME_NUM 10
-#define MAX_BRIGHTNESS_LEN 5
 
 #ifndef SECOND_DISPLAY_START_BIT
 #define SECOND_DISPLAY_START_BIT 4
@@ -475,7 +476,7 @@ class ExynosDisplay : public ExynosVsyncHandler {
     bool mIsSkipFrame;
 
     hiberState_t mHiberState;
-    FILE *mBrightnessFd;
+    std::ofstream mBrightnessOfs;
     uint32_t mMaxBrightness;
 
     hwc_vsync_period_change_constraints_t mVsyncPeriodChangeConstraints;

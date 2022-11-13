@@ -289,7 +289,6 @@ ExynosDisplay::ExynosDisplay(DisplayIdentifier node)
       mNeedSkipPresent(false),
       mNeedSkipValidatePresent(false),
       mIsSkipFrame(false),
-      mBrightnessFd(NULL),
       mMaxBrightness(0),
       mVsyncPeriodChangeConstraints{systemTime(SYSTEM_TIME_MONOTONIC), 0},
       mVsyncAppliedTimeLine{false, 0, systemTime(SYSTEM_TIME_MONOTONIC)},
@@ -3121,7 +3120,7 @@ int32_t ExynosDisplay::getDisplayCapabilities(uint32_t *outNumCapabilities,
 
     uint32_t capabilityNum = 0;
 
-    if (mBrightnessFd != NULL)
+    if (mBrightnessOfs.is_open())
         capabilityNum++;
 
     if (mDisplayInterface->isDozeModeAvailable()) {
@@ -3145,7 +3144,7 @@ int32_t ExynosDisplay::getDisplayCapabilities(uint32_t *outNumCapabilities,
 
     uint32_t index = 0;
 
-    if (mBrightnessFd != NULL)
+    if (mBrightnessOfs.is_open())
         outCapabilities[index++] = HWC2_DISPLAY_CAPABILITY_BRIGHTNESS;
 
     if (mDisplayInterface->isDozeModeAvailable()) {
@@ -3163,7 +3162,7 @@ int32_t ExynosDisplay::getDisplayCapabilities(uint32_t *outNumCapabilities,
 }
 
 int32_t ExynosDisplay::getDisplayBrightnessSupport(bool *outSupport) {
-    if (mBrightnessFd == NULL) {
+    if (!mBrightnessOfs.is_open()) {
         *outSupport = false;
     } else {
         *outSupport = true;
@@ -3173,23 +3172,16 @@ int32_t ExynosDisplay::getDisplayBrightnessSupport(bool *outSupport) {
 }
 
 int32_t ExynosDisplay::setDisplayBrightness(float brightness) {
-    if (mBrightnessFd == NULL)
+    if (!mBrightnessOfs.is_open())
         return HWC2_ERROR_UNSUPPORTED;
 
-    char val[MAX_BRIGHTNESS_LEN] = {0};
     uint32_t scaledBrightness = static_cast<uint32_t>(round(brightness * mMaxBrightness));
 
-    int32_t ret = 0;
-    if ((ret = snprintf(val, MAX_BRIGHTNESS_LEN, "%d", scaledBrightness)) > 0) {
-        fwrite(val, sizeof(val), 1, mBrightnessFd);
-        if (ferror(mBrightnessFd)) {
-            DISPLAY_LOGE("brightness write failed");
-            clearerr(mBrightnessFd);
-        }
-        rewind(mBrightnessFd);
-    } else {
-        DISPLAY_LOGE("Fail to set brightness, ret(%d), brightness(%f, %d)",
-                     ret, brightness, scaledBrightness);
+    mBrightnessOfs.seekp(std::ios_base::beg);
+    mBrightnessOfs << std::to_string(scaledBrightness);
+    mBrightnessOfs.flush();
+    if (mBrightnessOfs.fail()) {
+        DISPLAY_LOGE("brightness write failed");
     }
 
     return HWC2_ERROR_NONE;

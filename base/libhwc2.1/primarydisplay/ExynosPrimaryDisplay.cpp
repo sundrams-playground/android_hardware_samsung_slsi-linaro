@@ -53,29 +53,23 @@ ExynosPrimaryDisplay::ExynosPrimaryDisplay(DisplayIdentifier node)
 #endif
 
 #if defined(MAX_BRIGHTNESS_NODE_BASE) && defined(BRIGHTNESS_NODE_BASE)
-    FILE *maxBrightnessFd = fopen(MAX_BRIGHTNESS_NODE_BASE, "r");
+    std::ifstream ifsMaxBrightness(MAX_BRIGHTNESS_NODE_BASE);
     ALOGI("Trying %s open for get max brightness", MAX_BRIGHTNESS_NODE_BASE);
 
-    if (maxBrightnessFd != NULL) {
-        char val[MAX_BRIGHTNESS_LEN] = {0};
-        size_t size = fread(val, 1, MAX_BRIGHTNESS_LEN, maxBrightnessFd);
-        if (size) {
-            mMaxBrightness = atoi(val);
+    if (!ifsMaxBrightness.fail()) {
+        ifsMaxBrightness >> mMaxBrightness;
+        if (!ifsMaxBrightness.fail()) {
             ALOGI("Max brightness : %d", mMaxBrightness);
 
-            mBrightnessFd = fopen(BRIGHTNESS_NODE_BASE, "w+");
+            mBrightnessOfs = std::ofstream(BRIGHTNESS_NODE_BASE, std::ofstream::out);
             ALOGI("Trying %s open for brightness control", BRIGHTNESS_NODE_BASE);
 
-            if (mBrightnessFd == NULL)
+            if (mBrightnessOfs.fail())
                 ALOGE("%s open failed! %s", BRIGHTNESS_NODE_BASE, strerror(errno));
         } else {
-            ALOGE("Max brightness read failed (size: %zu)", size);
-            if (ferror(maxBrightnessFd)) {
-                ALOGE("An error occurred");
-                clearerr(maxBrightnessFd);
-            }
+            ALOGE("Max brightness read failed! %s", strerror(errno));
         }
-        fclose(maxBrightnessFd);
+        ifsMaxBrightness.close();
     } else {
         ALOGE("Brightness node is not opened");
     }
@@ -181,9 +175,8 @@ ExynosPrimaryDisplay::~ExynosPrimaryDisplay() {
         close(mDisplayColorFd);
 #endif
 
-    if (mBrightnessFd != NULL) {
-        fclose(mBrightnessFd);
-        mBrightnessFd = NULL;
+    if (mBrightnessOfs.is_open()) {
+        mBrightnessOfs.close();
     }
 }
 
