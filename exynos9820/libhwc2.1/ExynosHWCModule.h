@@ -30,7 +30,7 @@
 #define DP_CABLE_STATE_NAME "/sys/devices/platform/%s/extcon/extcon0/cable.%d/state"
 #define BRIGHTNESS_NODE_BASE "/sys/class/backlight/panel/brightness"
 #define MAX_BRIGHTNESS_NODE_BASE "/sys/class/backlight/panel/max_brightness"
-#define USE_DPU_SET_CONFIG
+#define USES_SET_DISPLAY_MODE_IOCTL
 
 #define IDMA(x) static_cast<decon_idma_type>(x)
 
