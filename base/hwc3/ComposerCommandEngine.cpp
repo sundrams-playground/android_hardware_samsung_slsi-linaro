@@ -125,8 +125,6 @@ int32_t ComposerCommandEngine::executeValidateDisplayInternal(int64_t display) {
     if (!err) {
         mWriter->setChangedCompositionTypes(display, changedLayers, compositionTypes);
         mWriter->setDisplayRequests(display, displayRequestMask, requestedLayers, requestMasks);
-        // TODO: (b/196171661) sdr/hdr composition, use 1.0
-        mWriter->setClientTargetProperty(display, clientTargetProperty, 1.0f);
     } else {
         LOG(ERROR) << __func__ << ": err " << err;
         mWriter->setError(mCommandIndex, err);
