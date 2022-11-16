@@ -119,14 +119,18 @@ int32_t ExynosPrimaryDisplay::clearBootDisplayConfig() {
 int32_t ExynosPrimaryDisplay::getPreferredDisplayConfigInternal(int32_t *outConfig) {
     char modeStr[PROPERTY_VALUE_MAX];
 
-    auto ret = property_get(PROPERTY_BOOT_MODE, modeStr, nullptr);
-    if (ret < 0)
-        return HWC2_ERROR_BAD_CONFIG;
+    int len = property_get(PROPERTY_BOOT_MODE, modeStr, nullptr);
+    if (len < 1) {
+        hwc2_config_t config;
+        mDisplayInterface->getDPUConfig(&config);
+        *outConfig = config;
+        return HWC2_ERROR_NONE;
+    }
 
     int width, height;
     int fps = 0;
 
-    ret = sscanf(modeStr, "%dx%d@%d", &width, &height, &fps);
+    int ret = sscanf(modeStr, "%dx%d@%d", &width, &height, &fps);
     if ((ret < 3) || !fps) {
         ALOGD("%s: unable to find boot config for mode: %s", __func__, modeStr);
         return HWC2_ERROR_BAD_CONFIG;
