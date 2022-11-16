@@ -78,8 +78,7 @@ void ComposerCommandEngine::dispatchDisplayCommand(const DisplayCommand& command
     DISPATCH_DISPLAY_COMMAND(command, colorTransformMatrix, SetColorTransform);
     DISPATCH_DISPLAY_COMMAND(command, clientTarget, SetClientTarget);
     DISPATCH_DISPLAY_COMMAND(command, virtualDisplayOutputBuffer, SetOutputBuffer);
-    // TODO: (b/196171661) SDR & HDR blending
-    // DISPATCH_DISPLAY_COMMAND(command, brightness, SetBrightness);
+    DISPATCH_DISPLAY_COMMAND(command, brightness, SetDisplayBrightness);
     DISPATCH_DISPLAY_BOOL_COMMAND_AND_DATA(command, validateDisplay, expectedPresentTime,
                                            ValidateDisplay);
     DISPATCH_DISPLAY_BOOL_COMMAND(command, acceptDisplayChanges, AcceptDisplayChanges);
@@ -193,6 +192,15 @@ void ComposerCommandEngine::executeValidateDisplay(
         int64_t display, const std::optional<ClockMonotonicTimestamp> expectedPresentTime) {
     executeSetExpectedPresentTimeInternal(display, expectedPresentTime);
     executeValidateDisplayInternal(display);
+}
+
+void ComposerCommandEngine::executeSetDisplayBrightness(uint64_t display,
+                                        const DisplayBrightness& command) {
+    auto err = mHal->setDisplayBrightness(display, command.brightness);
+    if (err) {
+        LOG(ERROR) << __func__ << ": err " << err;
+        mWriter->setError(mCommandIndex, err);
+    }
 }
 
 void ComposerCommandEngine::executePresentOrValidateDisplay(

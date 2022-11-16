@@ -44,6 +44,7 @@ class ComposerCommandEngine {
 
       void executeSetColorTransform(int64_t display, const std::vector<float>& matrix);
       void executeSetClientTarget(int64_t display, const ClientTarget& command);
+      void executeSetDisplayBrightness(uint64_t display, const DisplayBrightness& command);
       void executeSetOutputBuffer(uint64_t display, const Buffer& buffer);
       void executeValidateDisplay(int64_t display,
                                   const std::optional<ClockMonotonicTimestamp> expectedPresentTime);
