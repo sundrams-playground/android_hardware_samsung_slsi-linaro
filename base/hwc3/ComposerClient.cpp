@@ -276,6 +276,12 @@ ndk::ScopedAStatus ComposerClient::getSupportedContentTypes(int64_t display,
     return TO_BINDER_STATUS(err);
 }
 
+ndk::ScopedAStatus ComposerClient::getDisplayDecorationSupport(int64_t __unused display,
+        std::optional<common::DisplayDecorationSupport>* supportStruct) {
+    supportStruct->reset();
+    return ndk::ScopedAStatus::ok();
+}
+
 ndk::ScopedAStatus ComposerClient::registerCallback(
         const std::shared_ptr<IComposerCallback>& callback) {
     DEBUG_FUNC();
