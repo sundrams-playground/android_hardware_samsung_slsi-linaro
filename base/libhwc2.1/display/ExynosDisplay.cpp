@@ -3178,6 +3178,14 @@ int32_t ExynosDisplay::setDisplayBrightness(float brightness) {
 
     uint32_t scaledBrightness = static_cast<uint32_t>(round(brightness * mMaxBrightness));
 
+#ifdef MINIMUM_DISPLAY_BRIGHTNESS
+    // The special value of -1.0 is only passed when display is turning off
+    // so it should be allowed to set a lower than minimum brightness.
+    if (brightness != -1.0) {
+        scaledBrightness = std::max(scaledBrightness, (uint32_t)MINIMUM_DISPLAY_BRIGHTNESS);
+    }
+#endif
+
     mBrightnessOfs.seekp(std::ios_base::beg);
     mBrightnessOfs << std::to_string(scaledBrightness);
     mBrightnessOfs.flush();
