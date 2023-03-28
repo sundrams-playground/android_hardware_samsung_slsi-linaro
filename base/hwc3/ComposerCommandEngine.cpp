@@ -239,7 +239,8 @@ int ComposerCommandEngine::executePresentDisplay(int64_t display) {
     std::vector<ndk::ScopedFileDescriptor> fences;
     auto err = mHal->presentDisplay(display, presentFence, &layers, &fences);
     if (!err) {
-        mWriter->setPresentFence(display, std::move(presentFence));
+        if (presentFence != ndk::ScopedFileDescriptor(-1))
+            mWriter->setPresentFence(display, std::move(presentFence));
         mWriter->setReleaseFences(display, layers, std::move(fences));
     }
     return err;
