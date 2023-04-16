@@ -520,14 +520,6 @@ void ExynosVirtualDisplay::initPerFrameData() {
 }
 
 bool ExynosVirtualDisplay::checkSkipFrame() {
-    for (size_t i = 0; i < mLayers.size(); i++) {
-        ExynosLayer *layer = mLayers[i];
-        if (layer->mCompositionType == HWC2_COMPOSITION_SCREENSHOT) {
-            DISPLAY_LOGD(eDebugVirtualDisplay, "%s:: skip rotation animation layer", __func__);
-            return true;
-        }
-    }
-
     if (mLayers.size() == 0) {
         DISPLAY_LOGD(eDebugVirtualDisplay, "%s:: there is no layer", __func__);
         return true;

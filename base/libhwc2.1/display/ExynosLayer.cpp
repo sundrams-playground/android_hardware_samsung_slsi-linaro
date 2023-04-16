@@ -359,10 +359,6 @@ int32_t ExynosLayer::setLayerCompositionType(int32_t /*hwc2_composition_t*/ type
     if (type < 0)
         return HWC2_ERROR_BAD_PARAMETER;
 
-    if (mDisplayInfo.displayIdentifier.type == HWC_DISPLAY_PRIMARY)
-        if (type == HWC2_COMPOSITION_SCREENSHOT)
-            type = HWC2_COMPOSITION_DEVICE;
-
     if (type != mSfCompositionType)
         setGeometryChanged(GEOMETRY_LAYER_TYPE_CHANGED, geometryFlag);
 
