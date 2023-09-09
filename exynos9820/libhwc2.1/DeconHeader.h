@@ -95,6 +95,7 @@ struct decon_win_config {
     DECON_WIN_STATE_BUFFER,
     DECON_WIN_STATE_UPDATE,
     DECON_WIN_STATE_CURSOR,
+    DECON_WIN_STATE_MRESOL = 0x10000,
   } state;
   union {
     __u32 color;
@@ -120,6 +121,7 @@ struct decon_win_config {
 struct decon_win_config_data {
   int present_fence;
   int fd_odma;
+  u32 fps;
   struct decon_win_config config[MAX_DECON_WIN + 1];
 };
 struct decon_disp_info {
