@@ -53,7 +53,8 @@ LOCAL_STATIC_LIBRARIES := libaidlcommonsupport
 
 LOCAL_HEADER_LIBRARIES := \
 	android.hardware.graphics.composer3-command-buffer \
-	libgralloc_headers
+	libgralloc_headers \
+	libhdrinterface_header
 
 LOCAL_C_INCLUDES := \
 	$(TOP)/hardware/samsung_slsi-linaro/exynos/include \
