@@ -22,6 +22,7 @@
 #include "ExynosDisplay.h"
 #include "ExynosHWCService.h"
 #include "ExynosLayer.h"
+#include "ExynosResourceManager.h"
 #include "HalImpl.h"
 #include "TranslateHwcAidl.h"
 #include "Util.h"
@@ -207,7 +208,7 @@ int32_t HalImpl::createLayer(int64_t display, int64_t* outLayer) {
     RET_IF_ERR(getHalDisplay(display, halDisplay));
 
     hwc2_layer_t hwcLayer = 0;
-    RET_IF_ERR(halDisplay->createLayer(&hwcLayer));
+    RET_IF_ERR(mDevice->createLayer(halDisplay, &hwcLayer));
 
     h2a::translate(hwcLayer, *outLayer);
     return HWC2_ERROR_NONE;
@@ -220,7 +221,7 @@ int32_t HalImpl::destroyLayer(int64_t display, int64_t layer) {
     ExynosLayer *halLayer;
     RET_IF_ERR(getHalLayer(display, layer, halLayer));
 
-    return halDisplay->destroyLayer(reinterpret_cast<hwc2_layer_t>(halLayer));
+    return mDevice->destroyLayer(halDisplay, reinterpret_cast<hwc2_layer_t>(halLayer));
 }
 
 int32_t HalImpl::createVirtualDisplay(uint32_t width, uint32_t height, AidlPixelFormat format,
@@ -264,10 +265,10 @@ int32_t HalImpl::getColorModes(int64_t display, std::vector<ColorMode>* outModes
     RET_IF_ERR(getHalDisplay(display, halDisplay));
 
     uint32_t count = 0;
-    RET_IF_ERR(halDisplay->getColorModes(&count, nullptr));
+    RET_IF_ERR(mDevice->getColorModes(halDisplay, &count, nullptr));
 
     std::vector<int32_t> hwcModes(count);
-    RET_IF_ERR(halDisplay->getColorModes(&count, hwcModes.data()));
+    RET_IF_ERR(mDevice->getColorModes(halDisplay, &count, hwcModes.data()));
 
     h2a::translate(hwcModes, *outModes);
     return HWC2_ERROR_NONE;
@@ -541,7 +542,7 @@ int32_t HalImpl::presentDisplay(int64_t display, ndk::ScopedFileDescriptor& fenc
     }
 
     int32_t hwcFence;
-    RET_IF_ERR(halDisplay->presentDisplay(&hwcFence));
+    RET_IF_ERR(mDevice->presentDisplay(halDisplay, &hwcFence));
     h2a::translate(hwcFence, fence);
 
     uint32_t count = 0;
@@ -630,7 +631,7 @@ int32_t HalImpl::setClientTarget(int64_t display, buffer_handle_t target,
     hwc_region_t region = { hwcDamage.size(), hwcDamage.data() };
     UNUSED(region);
 
-    return halDisplay->setClientTarget(target, hwcFence, hwcDataspace);
+    return mDevice->setClientTarget(halDisplay, target, hwcFence, hwcDataspace);
 }
 
 int32_t HalImpl::setColorMode(int64_t display, ColorMode mode, RenderIntent intent) {
@@ -642,7 +643,7 @@ int32_t HalImpl::setColorMode(int64_t display, ColorMode mode, RenderIntent inte
 
     a2h::translate(mode, hwcMode);
     a2h::translate(intent, hwcIntent);
-    return halDisplay->setColorModeWithRenderIntent(hwcMode, hwcIntent);
+    return mDevice->setColorModeWithRenderIntent(halDisplay, hwcMode, hwcIntent);
 }
 
 int32_t HalImpl::setColorTransform(int64_t display, const std::vector<float>& matrix) {
@@ -663,7 +664,7 @@ int32_t HalImpl::setColorTransform(int64_t display, const std::vector<float>& ma
 
     int32_t hwcHint;
     a2h::translate(hint, hwcHint);
-    return halDisplay->setColorTransform(matrix.data(), hwcHint);
+    return mDevice->setColorTransform(halDisplay, matrix.data(), hwcHint);
 }
 
 int32_t HalImpl::setContentType(int64_t display, ContentType contentType) {
@@ -696,18 +697,21 @@ int32_t HalImpl::setLayerBlendMode(int64_t display, int64_t layer, common::Blend
 
     int32_t hwcMode;
     a2h::translate(mode, hwcMode);
-    return halLayer->setLayerBlendMode(hwcMode);
+    return mDevice->setLayerBlendMode(halLayer, hwcMode);
 }
 
 int32_t HalImpl::setLayerBuffer(int64_t display, int64_t layer, buffer_handle_t buffer,
                                 const ndk::ScopedFileDescriptor& acquireFence) {
-    ExynosLayer *halLayer;
-    RET_IF_ERR(getHalLayer(display, layer, halLayer));
+    ExynosDisplay* halDisplay;
+    RET_IF_ERR(getHalDisplay(display, halDisplay));
+
+    hwc2_layer_t hwcLayer;
+    a2h::translate(layer, hwcLayer);
 
     int32_t hwcFd;
     a2h::translate(acquireFence, hwcFd);
 
-    return halLayer->setLayerBuffer(buffer, hwcFd);
+    return mDevice->setLayerBuffer(halDisplay, hwcLayer, buffer, hwcFd);
 }
 
 int32_t HalImpl::setLayerColor(int64_t display, int64_t layer, Color color) {
@@ -733,23 +737,26 @@ int32_t HalImpl::setLayerCompositionType(int64_t display, int64_t layer, Composi
 
     int32_t hwcType;
     a2h::translate(type, hwcType);
-    return halLayer->setLayerCompositionType(hwcType);
+    return mDevice->setLayerCompositionType(halLayer, hwcType);
 }
 
-int32_t HalImpl::setLayerCursorPosition(int64_t display, int64_t layer, int32_t x, int32_t y) {
-    ExynosLayer *halLayer;
-    RET_IF_ERR(getHalLayer(display, layer, halLayer));
+int32_t HalImpl::setLayerCursorPosition(int64_t display, int64_t __unused layer, int32_t x, int32_t y) {
+    ExynosDisplay *halDisplay;
+    RET_IF_ERR(getHalDisplay(display, halDisplay));
 
-    return halLayer->setCursorPosition(x, y);
+    return halDisplay->setCursorPositionAsync(x, y);
 }
 
 int32_t HalImpl::setLayerDataspace(int64_t display, int64_t layer, common::Dataspace dataspace) {
-    ExynosLayer *halLayer;
-    RET_IF_ERR(getHalLayer(display, layer, halLayer));
+    ExynosDisplay *halDisplay;
+    RET_IF_ERR(getHalDisplay(display, halDisplay));
+
+    hwc2_layer_t hwcLayer;
+    a2h::translate(layer, hwcLayer);
 
     int32_t hwcDataspace;
     a2h::translate(dataspace, hwcDataspace);
-    return halLayer->setLayerDataspace(hwcDataspace);
+    return mDevice->setLayerDataspace(halDisplay, hwcLayer, hwcDataspace);
 }
 
 int32_t HalImpl::setLayerDisplayFrame(int64_t display, int64_t layer, const common::Rect& frame) {
@@ -758,7 +765,7 @@ int32_t HalImpl::setLayerDisplayFrame(int64_t display, int64_t layer, const comm
 
     hwc_rect_t hwcFrame;
     a2h::translate(frame, hwcFrame);
-    return halLayer->setLayerDisplayFrame(hwcFrame);
+    return mDevice->setLayerDisplayFrame(halLayer, hwcFrame);
 }
 
 int32_t HalImpl::setLayerPerFrameMetadata(int64_t display, int64_t layer,
@@ -825,7 +832,7 @@ int32_t HalImpl::setLayerSourceCrop(int64_t display, int64_t layer, const common
 
     hwc_frect_t hwcCrop;
     a2h::translate(crop, hwcCrop);
-    return halLayer->setLayerSourceCrop(hwcCrop);
+    return mDevice->setLayerSourceCrop(halLayer, hwcCrop);
 }
 
 int32_t HalImpl::setLayerSurfaceDamage(int64_t display, int64_t layer,
@@ -847,7 +854,7 @@ int32_t HalImpl::setLayerTransform(int64_t display, int64_t layer, common::Trans
     int32_t hwcTransform;
     a2h::translate(transform, hwcTransform);
 
-    return halLayer->setLayerTransform(hwcTransform);
+    return mDevice->setLayerTransform(halLayer, hwcTransform);
 }
 
 int32_t HalImpl::setLayerVisibleRegion(int64_t display, int64_t layer,
@@ -866,7 +873,7 @@ int32_t HalImpl::setLayerZOrder(int64_t display, int64_t layer, uint32_t z) {
     ExynosLayer *halLayer;
     RET_IF_ERR(getHalLayer(display, layer, halLayer));
 
-    return halLayer->setLayerZOrder(z);
+    return mDevice->setLayerZOrder(halLayer, z);
 }
 
 int32_t HalImpl::setOutputBuffer(int64_t display, buffer_handle_t buffer,
@@ -896,7 +903,7 @@ int32_t HalImpl::setPowerMode(int64_t display, PowerMode mode) {
 
     int32_t hwcMode;
     a2h::translate(mode, hwcMode);
-    return halDisplay->setPowerMode(hwcMode);
+    return mDevice->setPowerMode(halDisplay, hwcMode);
 }
 
 int32_t HalImpl::setReadbackBuffer(int64_t display, buffer_handle_t buffer,
@@ -938,7 +945,7 @@ int32_t HalImpl::validateDisplay(int64_t display, std::vector<int64_t>* outChang
 
     uint32_t typesCount = 0;
     uint32_t reqsCount = 0;
-    auto err = halDisplay->validateDisplay(&typesCount, &reqsCount);
+    auto err = mDevice->validateDisplay(halDisplay, &typesCount, &reqsCount);
 
     if (err != HWC2_ERROR_NONE && err != HWC2_ERROR_HAS_CHANGES) {
         return err;
