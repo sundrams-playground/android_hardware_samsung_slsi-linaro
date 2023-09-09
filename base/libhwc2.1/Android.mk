@@ -48,24 +48,24 @@ LOCAL_HEADER_LIBRARIES += libdisplaycolor_interface
 endif
 
 LOCAL_C_INCLUDES += \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/device \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/utils \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/display \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/resources \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/primarydisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/externaldisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/virtualdisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/driver_header \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1 \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/device \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/utils \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/display \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/resources \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/primarydisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/externaldisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/virtualdisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/libhwcService \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libdrmresource
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/device \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/utils \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/display \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/resources \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/primarydisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/externaldisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/virtualdisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/driver_header \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1 \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/device \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/utils \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/display \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/resources \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/primarydisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/externaldisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/virtualdisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/libhwcService \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libdrmresource
 
 LOCAL_SRC_FILES := \
 	device/ExynosDevice.cpp \
@@ -95,7 +95,7 @@ LOCAL_SRC_FILES := \
 LOCAL_EXPORT_SHARED_LIBRARY_HEADERS += libacryl libdrm
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_C_INCLUDES)
 
-include $(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/Android.mk
+include $(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/Android.mk
 
 LOCAL_CFLAGS := -DHLOG_CODE=0
 LOCAL_CFLAGS += -DLOG_TAG=\"display\"
@@ -107,7 +107,7 @@ endif
 LOCAL_MODULE := libexynosdisplay
 LOCAL_MODULE_TAGS := optional
 
-include $(TOP)/hardware/samsung_slsi/graphics/base/BoardConfigCFlags.mk
+include $(TOP)/hardware/samsung_slsi-linaro/graphics/base/BoardConfigCFlags.mk
 include $(BUILD_SHARED_LIBRARY)
 
 ################################################################################
@@ -123,24 +123,24 @@ LOCAL_STATIC_LIBRARIES += libVendorVideoApi
 LOCAL_PROPRIETARY_MODULE := true
 
 LOCAL_C_INCLUDES += \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/device \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/utils \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/display \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/resources \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/primarydisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/externaldisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/virtualdisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/driver_header \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1 \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/device \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/utils \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/display \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/resources \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/primarydisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/externaldisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/virtualdisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/libhwcService \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libdrmresource
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/device \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/utils \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/display \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/resources \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/primarydisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/externaldisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/virtualdisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/driver_header \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1 \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/device \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/utils \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/display \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/resources \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/primarydisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/externaldisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/virtualdisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/libhwcService \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libdrmresource
 
 LOCAL_CFLAGS := -DHLOG_CODE=0
 LOCAL_CFLAGS += -DLOG_TAG=\"hwcservice\"
@@ -170,7 +170,7 @@ endif
 LOCAL_MODULE := libExynosHWCService
 LOCAL_MODULE_TAGS := optional
 
-include $(TOP)/hardware/samsung_slsi/graphics/base/BoardConfigCFlags.mk
+include $(TOP)/hardware/samsung_slsi-linaro/graphics/base/BoardConfigCFlags.mk
 include $(BUILD_SHARED_LIBRARY)
 
 endif
@@ -196,23 +196,23 @@ endif
 LOCAL_STATIC_LIBRARIES += libVendorVideoApi
 
 LOCAL_C_INCLUDES += \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/device \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/utils \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/display \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/resources \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/primarydisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/externaldisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/virtualdisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/driver_header \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1 \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/device \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/utils \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/display \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/resources \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/primarydisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/externaldisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/virtualdisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/libhwcService \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/device \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/utils \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/display \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/resources \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/primarydisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/externaldisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/virtualdisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/driver_header \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1 \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/device \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/utils \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/display \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/resources \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/primarydisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/externaldisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/virtualdisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/libhwcService \
 
 LOCAL_HEADER_LIBRARIES += libhdrinterface_header libhdr10p_meta_interface_header
 ifdef BOARD_LIBHDR_PLUGIN
@@ -242,7 +242,7 @@ LOCAL_MODULE := hwcomposer.$(TARGET_SOC)
 endif
 LOCAL_MODULE_TAGS := optional
 
-include $(TOP)/hardware/samsung_slsi/graphics/base/BoardConfigCFlags.mk
+include $(TOP)/hardware/samsung_slsi-linaro/graphics/base/BoardConfigCFlags.mk
 include $(BUILD_SHARED_LIBRARY)
 
 ################################################################################
@@ -262,25 +262,25 @@ LOCAL_CFLAGS := -DHLOG_CODE=0
 LOCAL_CFLAGS += -DLOG_TAG=\"hwcomposer\"
 
 LOCAL_C_INCLUDES += \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/unittest \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/device \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/utils \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/display \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/resources \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/primarydisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/externaldisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/virtualdisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/driver_header \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1 \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/device \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/utils \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/display \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/resources \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/primarydisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/externaldisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/$(TARGET_SOC_BASE)/libhwc2.1/virtualdisplay \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libhwc2.1/libhwcService \
-	$(TOP)/hardware/samsung_slsi/graphics/base/libdrmresource
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/unittest \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/device \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/utils \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/display \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/resources \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/primarydisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/externaldisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/virtualdisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/driver_header \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1 \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/device \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/utils \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/display \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/resources \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/primarydisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/externaldisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/$(TARGET_SOC_BASE)/libhwc2.1/virtualdisplay \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libhwc2.1/libhwcService \
+	$(TOP)/hardware/samsung_slsi-linaro/graphics/base/libdrmresource
 
 LOCAL_HEADER_LIBRARIES += libhdrinterface_header libhdr10p_meta_interface_header
 ifdef BOARD_LIBHDR_PLUGIN
@@ -308,5 +308,5 @@ LOCAL_CFLAGS += -Wno-unused-parameter
 LOCAL_CFLAGS += -Wno-unused-variable
 LOCAL_MODULE := hwcomposer_unittest
 
-include $(TOP)/hardware/samsung_slsi/graphics/base/BoardConfigCFlags.mk
+include $(TOP)/hardware/samsung_slsi-linaro/graphics/base/BoardConfigCFlags.mk
 include $(BUILD_EXECUTABLE)

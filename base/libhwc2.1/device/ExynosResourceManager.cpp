@@ -1817,7 +1817,7 @@ int32_t ExynosResourceManager::updateResourceState() {
  * This function is called every frame.
  * This base function does nothing.
  * Module that supports setting frame rate should implement this function
- * in the module source code (hardware/samsung_slsi/graphics/exynos...).
+ * in the module source code (hardware/samsung_slsi-linaro/graphics/exynos...).
  */
 void ExynosResourceManager::setFrameRateForPerformance(ExynosMPP &mpp,
                                                        AcrylicPerformanceRequestFrame *frame) {

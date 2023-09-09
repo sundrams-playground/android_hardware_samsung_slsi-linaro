@@ -20,8 +20,8 @@ cc_test {
     proprietary: true,
     cflags: [ "-g", "-Werror", "-DM2M" ],
     include_dirs: [
-        "hardware/samsung_slsi/graphics/base/libtsmux/include",
-        "hardware/samsung_slsi/graphics/exynos9820/tsmux_asb_test/M2M",
+        "hardware/samsung_slsi-linaro/graphics/base/libtsmux/include",
+        "hardware/samsung_slsi-linaro/graphics/exynos9820/tsmux_asb_test/M2M",
     ],
     shared_libs: ["libion"],
     srcs: [
@@ -35,8 +35,8 @@ cc_test {
     proprietary: true,
     cflags: [ "-g", "-Werror", "-DOTF" ],
     include_dirs: [
-        "hardware/samsung_slsi/graphics/base/libtsmux/include",
-        "hardware/samsung_slsi/graphics/exynos9820/tsmux_asb_test/OTF/OTF_HDCP_DISABLE/",
+        "hardware/samsung_slsi-linaro/graphics/base/libtsmux/include",
+        "hardware/samsung_slsi-linaro/graphics/exynos9820/tsmux_asb_test/OTF/OTF_HDCP_DISABLE/",
     ],
     shared_libs: ["libion"],
     srcs: [
@@ -50,8 +50,8 @@ cc_test {
     proprietary: true,
     cflags: [ "-g", "-Werror", "-DOTF" ],
     include_dirs: [
-        "hardware/samsung_slsi/graphics/base/libtsmux/include",
-        "hardware/samsung_slsi/graphics/exynos9820/tsmux_asb_test/OTF/OTF_HDCP_ENABLE/",
+        "hardware/samsung_slsi-linaro/graphics/base/libtsmux/include",
+        "hardware/samsung_slsi-linaro/graphics/exynos9820/tsmux_asb_test/OTF/OTF_HDCP_ENABLE/",
     ],
     shared_libs: ["libion"],
     srcs: [

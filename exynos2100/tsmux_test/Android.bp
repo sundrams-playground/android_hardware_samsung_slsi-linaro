@@ -20,7 +20,7 @@ cc_test {
     proprietary: true,
     cflags: [ "-g", "-Werror", "-DM2M" ],
     include_dirs: [
-        "hardware/samsung_slsi/graphics/exynos2100/tsmux_test/M2M",
+        "hardware/samsung_slsi-linaro/graphics/exynos2100/tsmux_test/M2M",
     ],
     local_include_dirs: [ "include" ],
     shared_libs: ["libdmabufheap"],
@@ -35,7 +35,7 @@ cc_test {
     proprietary: true,
     cflags: [ "-g", "-Werror", "-DOTF" ],
     include_dirs: [
-        "hardware/samsung_slsi/graphics/exynos2100/tsmux_test/OTF/OTF_HDCP_DISABLE/",
+        "hardware/samsung_slsi-linaro/graphics/exynos2100/tsmux_test/OTF/OTF_HDCP_DISABLE/",
     ],
     local_include_dirs: [ "include" ],
     shared_libs: ["libdmabufheap"],
@@ -50,7 +50,7 @@ cc_test {
     proprietary: true,
     cflags: [ "-g", "-Werror", "-DOTF" ],
     include_dirs: [
-        "hardware/samsung_slsi/graphics/exynos2100/tsmux_test/OTF/OTF_HDCP_ENABLE/",
+        "hardware/samsung_slsi-linaro/graphics/exynos2100/tsmux_test/OTF/OTF_HDCP_ENABLE/",
     ],
     local_include_dirs: [ "include" ],
     shared_libs: ["libdmabufheap"],
