@@ -1,0 +1,111 @@
+// Copyright (C) 2021 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+soong_config_module_type {
+    name: "libacryl_cc_defaults",
+    module_type: "cc_defaults",
+    config_namespace: "libacryl",
+    value_variables: [
+        "default_compositor",
+        "default_scaler",
+        "default_blter",
+        "g2d9810_hdr_plugin",
+    ],
+    properties: [ "cflags", "shared_libs", ],
+}
+
+libacryl_cc_defaults {
+    name: "libacryl_defaults",
+    soong_config_variables: {
+        default_compositor: {
+            cflags: ["-DLIBACRYL_DEFAULT_COMPOSITOR=\"%s\""],
+            conditions_default: {
+                cflags: ["-DLIBACRYL_DEFAULT_COMPOSITOR=\"no_default_compositor\""],
+            },
+        },
+        default_scaler: {
+            cflags: ["-DLIBACRYL_DEFAULT_SCALER=\"%s\""],
+            conditions_default: {
+                cflags: ["-DLIBACRYL_DEFAULT_SCALER=\"no_default_scaler\""],
+            },
+        },
+        default_blter: {
+            cflags: ["-DLIBACRYL_DEFAULT_BLTER=\"%s\""],
+            conditions_default: {
+                cflags: ["-DLIBACRYL_DEFAULT_BLTER=\"no_default_blter\""],
+            },
+        },
+        g2d9810_hdr_plugin: {
+            cflags: ["-DLIBACRYL_G2D9810_HDR_PLUGIN"],
+            shared_libs: ["%s"],
+        },
+    },
+}
+
+cc_library_headers {
+    name: "libacryl_hdrplugin_headers",
+    proprietary: true,
+    local_include_dirs: ["local_include"],
+    export_include_dirs: ["hdrplugin_headers", "local_include"],
+}
+
+cc_library_shared {
+    name: "libacryl",
+
+    cflags: ["-DLOG_TAG=\"libacryl\""],
+    //cflags: ["-DLIBACRYL_DEBUG"],
+
+    defaults: ["libacryl_defaults",],
+
+    shared_libs: [
+        "liblog",
+        "libutils",
+        "libcutils",
+        "libion_exynos",
+    ],
+
+    header_libs: [
+        "libacryl_hdrplugin_headers"
+    ] + [
+        "libexynos_headers"
+    ] + [
+        "libhdrinterface_header_exynos9630",
+        "libhdr10p_meta_interface_header",
+    ],
+
+    local_include_dirs: ["local_include"] + ["include"],
+
+    export_include_dirs: ["include"],
+
+    srcs: [
+        "acrylic.cpp",
+        "acrylic_dummy.cpp",
+    ] + [
+        "acrylic_g2d.cpp",
+        "acrylic_mscl9810.cpp",
+        "acrylic_g2d9810.cpp",
+        "acrylic_mscl3830.cpp",
+        "acrylic_mscl3830_pre.cpp",
+    ] + [
+        "acrylic_factory.cpp",
+        "acrylic_layer.cpp",
+        "acrylic_formats.cpp",
+    ] + [
+        "acrylic_performance.cpp",
+        "acrylic_device.cpp",
+    ],
+
+    proprietary: true,
+
+}
