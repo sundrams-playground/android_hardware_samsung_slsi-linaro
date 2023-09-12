@@ -147,6 +147,23 @@ int32_t ExynosPrimaryDisplay::getPreferredDisplayConfigInternal(int32_t *outConf
     return HWC2_ERROR_BAD_CONFIG;
 }
 
+int32_t ExynosPrimaryDisplay::choosePreferredConfig()
+{
+    hwc2_config_t config;
+    int32_t bootConfig;
+    int32_t err = getPreferredDisplayConfigInternal(&bootConfig);
+    if (err == HWC2_ERROR_NONE && property_get_bool("sys.boot_completed", false) == true) {
+        config = static_cast<hwc2_config_t>(bootConfig);
+
+        if ((err = setActiveConfig(config)) < 0) {
+            ALOGE("failed to set default config, err %d", err);
+        }
+        ALOGI("Preferred mode id: %d", config);
+    }
+
+    return err;
+}
+
 ExynosPrimaryDisplay::~ExynosPrimaryDisplay() {
     if (mHiberState.hiberExitFd != NULL) {
         fclose(mHiberState.hiberExitFd);
@@ -389,6 +406,7 @@ void ExynosPrimaryDisplay::init(uint32_t maxWindowNum, ExynosMPP *blendingMPP) {
 #endif
 
     ExynosDisplay::init(maxWindowNum, blendingMPP);
+    choosePreferredConfig();
 }
 
 void ExynosPrimaryDisplay::checkLayersForSettingDR() {

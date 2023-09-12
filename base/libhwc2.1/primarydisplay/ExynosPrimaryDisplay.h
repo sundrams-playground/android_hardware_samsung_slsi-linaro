@@ -63,6 +63,8 @@ class ExynosPrimaryDisplay : public ExynosDisplay {
     int32_t setPowerOn();
     int32_t setPowerOff();
     int32_t setPowerDoze(bool suspend);
+
+    int32_t choosePreferredConfig();
 };
 
 #endif
