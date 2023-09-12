@@ -2118,6 +2118,7 @@ int32_t ExynosDisplay::acceptDisplayChanges() {
         }
     }
     mRenderingState = RENDERING_STATE_ACCEPTED_CHANGE;
+    mHWCRenderingState = RENDERING_STATE_ACCEPTED_CHANGE;
 
     return HWC2_ERROR_NONE;
 }

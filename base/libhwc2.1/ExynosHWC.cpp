@@ -183,7 +183,6 @@ int32_t exynos_acceptDisplayChanges(hwc2_device_t *dev, hwc2_display_t display) 
         ExynosDisplay *exynosDisplay = checkDisplay(exynosDevice, (uint32_t)display);
         if (exynosDisplay) {
             int32_t ret = exynosDisplay->acceptDisplayChanges();
-            exynosDisplay->mHWCRenderingState = RENDERING_STATE_ACCEPTED_CHANGE;
             return ret;
         }
     }
