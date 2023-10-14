@@ -18,21 +18,11 @@
 #define EXYNOS_DEVICE_MODULE_H
 
 #include "ExynosDevice.h"
-#include "CpuPerfInfo.h"
 
 class ExynosDeviceModule : public ExynosDevice {
     public:
         ExynosDeviceModule();
         ~ExynosDeviceModule();
-        bool getCPUPerfInfo(int display, int config, int32_t *cpuIDs, int32_t *minClock);
-        enum {
-            SF_PERF_MODE_SET = -1,
-            SF_PERF_MODE_RESET = -2,
-        };
-        virtual int32_t presentDisplay(ExynosDisplay *display,
-                int32_t *outPresentFence) override;
-        bool mEPICState = false;
-        epic_handle mBoostingEPICHandle = 0;
 };
 
 #endif

@@ -23,34 +23,6 @@
  * ****************************************************************/
 #define RESTRICTION_NONE 0
 
-#define USE_MODULE_ATTR
-
-/* Basic supported features */
-static feature_support_t feature_table[] =
-{
-    {MPP_DPP_G,
-        MPP_ATTR_BLOCK_MODE | MPP_ATTR_WINDOW_UPDATE | MPP_ATTR_DIM
-    },
-
-    {MPP_DPP_GF,
-        MPP_ATTR_AFBC | MPP_ATTR_BLOCK_MODE | MPP_ATTR_WINDOW_UPDATE | MPP_ATTR_DIM
-    },
-
-    {MPP_DPP_VGS,
-        MPP_ATTR_BLOCK_MODE | MPP_ATTR_WINDOW_UPDATE | MPP_ATTR_SCALE | MPP_ATTR_DIM
-    },
-
-    {MPP_MSC,
-        MPP_ATTR_FLIP_H | MPP_ATTR_FLIP_V | MPP_ATTR_ROT_90 |
-        MPP_ATTR_USE_CAPA
-    },
-
-    {MPP_G2D,
-        MPP_ATTR_AFBC | MPP_ATTR_FLIP_H | MPP_ATTR_FLIP_V | MPP_ATTR_ROT_90 |
-        MPP_ATTR_HDR10 | MPP_ATTR_USE_CAPA | MPP_ATTR_DIM
-    }
-};
-
 /**************************************************************************************
  * HAL_PIXEL_FORMATs
 enum {
@@ -208,32 +180,30 @@ static ppc_table ppc_table_map = {
     {PPC_IDX(MPP_G2D,PPC_FORMAT_YUV420,PPC_ROT_NO), {1.4, 1.3, 1.7, 2.5, 5.9, 1.3, 1.5}},
     {PPC_IDX(MPP_G2D,PPC_FORMAT_YUV420,PPC_ROT), {1.0, 0.9, 1.6, 2.6, 3.5, 0.9, 1.6}},
 
+    {PPC_IDX(MPP_G2D,PPC_FORMAT_YUV8_2,PPC_ROT_NO), {0.9, 0.9, 1.3, 1.5, 2.0, 0.7, 1.2}},
+    {PPC_IDX(MPP_G2D,PPC_FORMAT_YUV8_2,PPC_ROT), {0.4, 0.4, 1.1, 1.0, 1.8, 0.4, 1.2}},
+
     {PPC_IDX(MPP_G2D,PPC_FORMAT_YUV422,PPC_ROT_NO), {1.5, 1.1, 1.8, 2.5, 3.5, 1.1, 1.7}},
     {PPC_IDX(MPP_G2D,PPC_FORMAT_YUV422,PPC_ROT), {1.3, 1.0, 1.5, 2.6, 3.2, 1.0, 1.6}},
 
     {PPC_IDX(MPP_G2D,PPC_FORMAT_RGB32,PPC_ROT_NO), {1.5, 1.1, 1.8, 2.5, 3.5, 1.1, 1.7}},
     {PPC_IDX(MPP_G2D,PPC_FORMAT_RGB32,PPC_ROT), {1.3, 1.0, 1.5, 2.6, 3.2, 1.0, 1.6}},
 
-    {PPC_IDX(MPP_G2D,PPC_FORMAT_YUV8_2,PPC_ROT_NO), {0.9, 0.9, 1.3, 1.5, 2.0, 0.7, 1.2}},
-    {PPC_IDX(MPP_G2D,PPC_FORMAT_YUV8_2,PPC_ROT), {0.4, 0.4, 1.1, 1.0, 1.8, 0.4, 1.2}},
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV420,PPC_ROT_NO), {0.0001, }},
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV420,PPC_ROT), {0.0001, }},
 
-    {PPC_IDX(MPP_G2D,PPC_FORMAT_AFBC,PPC_ROT_NO), {1.5, 0.8, 0.8, 1.2, 1.6, 0.8, 1.4}},
-    {PPC_IDX(MPP_G2D,PPC_FORMAT_AFBC,PPC_ROT), {1.5, 0.8, 0.8, 1.2, 1.6, 0.8, 1.4}},
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV422,PPC_ROT_NO), {0.0001, }},
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV422,PPC_ROT), {0.0001, }},
 
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV420,PPC_ROT_NO), {5.4, }},
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV420,PPC_ROT), {4.86, }},
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_P010,PPC_ROT_NO), {0.0001, }},
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_P010,PPC_ROT), {0.0001, }},
 
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV422,PPC_ROT_NO), {3.6, }},
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV422,PPC_ROT), {3.24, }},
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV8_2,PPC_ROT_NO), {0.0001, }},
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV8_2,PPC_ROT), {0.0001, }},
 
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_P010,PPC_ROT_NO), {4.86, }},
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_P010,PPC_ROT), {4.37, }},
-
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV8_2,PPC_ROT_NO), {4.37, }},
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_YUV8_2,PPC_ROT), {3.94, }},
-
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_RGB32,PPC_ROT_NO), {1.8, }},
-    {PPC_IDX(MPP_MSC,PPC_FORMAT_RGB32,PPC_ROT), {1.62, }}
+    // RGB not used by MSC as default //
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_RGB32,PPC_ROT_NO), {0.0001, }},
+    {PPC_IDX(MPP_MSC,PPC_FORMAT_RGB32,PPC_ROT), {0.0001, }}
 };
 
 #endif

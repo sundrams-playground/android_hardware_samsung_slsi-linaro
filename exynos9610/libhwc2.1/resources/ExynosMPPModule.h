@@ -27,23 +27,6 @@ class ExynosMPPModule : public ExynosMPP {
         virtual bool isDataspaceSupportedByMPP(struct exynos_image &src, struct exynos_image &dst);
     protected:
         virtual uint32_t getMPPClock();
-
-    public:
-#ifdef USE_HDR_INTERFACE
-        int mHdrMap[MPP_G2D_HDR_PIPE_NUM];
-        Vector<android_dataspace> mAssignedDataspace;
-        Vector<int> mAssignedLuminance;
-        hdrInterface *mHdrCoefInterface;
-        bool isQualifiedHDRPipeRestriction(DisplayInfo &display,
-                struct exynos_image &src, struct exynos_image &dst);
-        virtual int32_t resetMPP();
-        virtual int32_t resetAssignedState();
-        virtual int32_t resetAssignedState(ExynosMPPSource *mppSource);
-        virtual bool isAssignableState(DisplayInfo &display, struct exynos_image &src, struct exynos_image &dst);
-        int32_t setG2DColorConversionInfo();
-        virtual int32_t assignMPP(DisplayInfo &display, ExynosMPPSource *mppSource);
-        virtual int32_t doPostProcessingInternal();
-#endif
 };
 
 #endif
