@@ -55,7 +55,9 @@
 
 #include "ExynosVideoApi.h"
 #include "VendorVideoAPI.h"
+#ifdef OMX_USES_EPIC
 #include <OperatorFactory.h>
+#endif
 
 #undef  EXYNOS_LOG_TAG
 #define EXYNOS_LOG_TAG    "Exynos_OSAL_Android"
@@ -100,11 +102,13 @@ typedef struct _EXYNOS_OMX_REF_HANDLE {
     EXYNOS_OMX_SHARED_BUFFER SharedBuffer[MAX_BUFFER_REF];
 } EXYNOS_OMX_REF_HANDLE;
 
+#ifdef OMX_USES_EPIC
 // for performance
 typedef struct _PERFORMANCE_HANDLE {
     bool bIsEncoder;
     void *pEpic;
 } PERFORMANCE_HANDLE;
+#endif
 static int lockCnt = 0;
 
 #ifndef USE_WA_ION_BUF_REF
@@ -4923,6 +4927,7 @@ EXIT:
 }
 
 OMX_HANDLETYPE Exynos_OSAL_CreatePerformanceHandle(OMX_BOOL bIsEncoder) {
+#ifdef OMX_USES_EPIC
     PERFORMANCE_HANDLE *pPerfHandle = (PERFORMANCE_HANDLE*)malloc(sizeof(PERFORMANCE_HANDLE));
     if (pPerfHandle == NULL) {
         Exynos_OSAL_Log(EXYNOS_LOG_TRACE, "[%s] failed to allocate PERFORMANCE_HANDLE", __FUNCTION__);
@@ -4946,10 +4951,16 @@ OMX_HANDLETYPE Exynos_OSAL_CreatePerformanceHandle(OMX_BOOL bIsEncoder) {
     }
 
     return pPerfHandle;
+#else
+    ((void) bIsEncoder);
+
+    return NULL;
+#endif
 }
 
 void Exynos_OSAL_Performance(OMX_HANDLETYPE handle, int value, int fps)
 {
+#ifdef OMX_USES_EPIC
     PERFORMANCE_HANDLE *pPerfHandle = (PERFORMANCE_HANDLE*)handle;
     if (pPerfHandle == NULL) {
         Exynos_OSAL_Log(EXYNOS_LOG_TRACE, "[%s] PERFORMANCE_HANDLE is invalid", __FUNCTION__);
@@ -4987,9 +4998,15 @@ void Exynos_OSAL_Performance(OMX_HANDLETYPE handle, int value, int fps)
             pEpic->doAction(eAcquire, nullptr);
         }
     }
+#else
+    ((void) handle);
+    ((void) value);
+    ((void) fps);
+#endif
 }
 
 void Exynos_OSAL_ReleasePerformanceHandle(OMX_HANDLETYPE handle) {
+#ifdef OMX_USES_EPIC
     PERFORMANCE_HANDLE *pPerfHandle = (PERFORMANCE_HANDLE*)handle;
     if (pPerfHandle == NULL) {
         Exynos_OSAL_Log(EXYNOS_LOG_TRACE, "[%s] PERFORMANCE_HANDLE is invalid", __FUNCTION__);
@@ -5009,6 +5026,9 @@ void Exynos_OSAL_ReleasePerformanceHandle(OMX_HANDLETYPE handle) {
     }
 
     free(pPerfHandle);
+#else
+    ((void) handle);
+#endif
 
     return;
 }

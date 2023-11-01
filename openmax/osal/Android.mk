@@ -158,8 +158,14 @@ LOCAL_SHARED_LIBRARIES := \
     libhidlbase \
     libui \
     libexynosgraphicbuffer \
-    libion_exynos \
+    libion_exynos
+
+ifeq ($(BOARD_OMX_USES_EPIC), true)
+LOCAL_SHARED_LIBRARIES += \
     libepicoperator
+
+LOCAL_CFLAGS += -DOMX_USES_EPIC
+endif
 
 LOCAL_C_INCLUDES := \
 	$(EXYNOS_OMX_TOP)/core \
