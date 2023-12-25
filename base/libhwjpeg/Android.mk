@@ -35,4 +35,5 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_PROPRIETARY_MODULE := true
 
+include $(TOP)/hardware/samsung_slsi-linaro/graphics/base/BoardConfigCFlags.mk
 include $(BUILD_SHARED_LIBRARY)

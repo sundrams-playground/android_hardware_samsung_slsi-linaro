@@ -194,13 +194,14 @@ void CAppMarkerWriter::PrepareAppWriter(char *base, exif_attribute_t *exif, extr
                 applen += m_pExif->user_comment_size;
         }
 
+#if HWJPEG_ANDROID_VERSION >= 11
         // OffsetTime*
         m_szOffsetTime = strlen(m_pExif->offset_time);
         if (m_szOffsetTime > 0) {
             m_nExifIFDFields += 3;
             applen += (IFD_FIELD_SIZE + EXIF_OFFSETTIME_LENGTH) * 3;
         }
-
+#endif
         // Interoperability SubIFD
         m_nExifIFDFields++; // Interoperability is sub IFD of Exif sub IFD
         applen += IFD_FIELD_SIZE +
@@ -391,11 +392,13 @@ char *CAppMarkerWriter::WriteAPP1(char *current, bool reserve_thumbnail_space, b
         exifwriter.WriteUndef(EXIF_TAG_EXIF_VERSION, 4, reinterpret_cast<unsigned char *>(m_pExif->exif_version));
         exifwriter.WriteCString(EXIF_TAG_DATE_TIME_ORG, EXIF_DATETIME_LENGTH, m_pExif->date_time);
         exifwriter.WriteCString(EXIF_TAG_DATE_TIME_DIGITIZE, EXIF_DATETIME_LENGTH, m_pExif->date_time);
+#if HWJPEG_ANDROID_VERSION >= 11
         if (m_szOffsetTime > 0) {
             exifwriter.WriteCString(EXIF_TAG_OFFSET_TIME, EXIF_OFFSETTIME_LENGTH, m_pExif->offset_time);
             exifwriter.WriteCString(EXIF_TAG_OFFSET_TIME_ORG, EXIF_OFFSETTIME_LENGTH, m_pExif->offset_time);
             exifwriter.WriteCString(EXIF_TAG_OFFSET_TIME_DIGITIZE, EXIF_OFFSETTIME_LENGTH, m_pExif->offset_time);
         }
+#endif
         exifwriter.WriteSRational(EXIF_TAG_SHUTTER_SPEED, 1, &m_pExif->shutter_speed);
         exifwriter.WriteRational(EXIF_TAG_APERTURE, 1, &m_pExif->aperture);
         exifwriter.WriteSRational(EXIF_TAG_BRIGHTNESS, 1, &m_pExif->brightness);

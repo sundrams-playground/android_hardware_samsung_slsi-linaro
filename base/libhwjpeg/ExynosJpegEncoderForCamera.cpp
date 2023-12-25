@@ -67,8 +67,14 @@ static int GetThumbnailFormat(int v4l2Format)
             return v4l2Format;
 }
 
+#if HWJPEG_ANDROID_VERSION >= 11
+#define HWJPEG_INDEX index
 ExynosJpegEncoderForCamera::ExynosJpegEncoderForCamera(bool bBTBComp, unsigned int index)
-        : ExynosJpegEncoder(index),
+#else
+#define HWJPEG_INDEX 0
+ExynosJpegEncoderForCamera::ExynosJpegEncoderForCamera(bool bBTBComp)
+#endif
+        : ExynosJpegEncoder(HWJPEG_INDEX),
           m_phwjpeg4thumb(NULL), m_fdIONClient(-1), m_fdIONThumbImgBuffer(-1), m_pIONThumbImgBuffer(NULL),
           m_szIONThumbImgBuffer(0), m_pIONThumbJpegBuffer(NULL), m_fdIONThumbJpegBuffer(-1), m_szIONThumbJpegBuffer(0),
           m_nThumbWidth(0), m_nThumbHeight(0), m_nThumbQuality(0),
@@ -80,7 +86,7 @@ ExynosJpegEncoderForCamera::ExynosJpegEncoderForCamera(bool bBTBComp, unsigned i
         return;
     }
 
-    m_phwjpeg4thumb = new CHWJpegV4L2Compressor(jpeg_node[index]);
+    m_phwjpeg4thumb = new CHWJpegV4L2Compressor(jpeg_node[HWJPEG_INDEX]);
     if (!m_phwjpeg4thumb) {
         ALOGE("Failed to create thumbnail compressor!");
         return;
