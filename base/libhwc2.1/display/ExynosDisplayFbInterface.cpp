@@ -191,8 +191,14 @@ int32_t ExynosDisplayFbInterface::setActiveConfig(hwc2_config_t config,
     display_mode.width = displayConfig.width;
     display_mode.height = displayConfig.height;
     display_mode.fps = (int)(1000000000 / displayConfig.vsyncPeriod);
+    display_mode.group = displayConfig.groupId;
 
-    if ((ret = ioctl(mDisplayFd, EXYNOS_SET_DISPLAY_MODE, &display_mode)) < 0) {
+    HDEBUGLOGD(eDebugDisplayConfig, "(display_mode %d) : %dx%d, fps:%d groupId: %d", config,
+               display_mode.width, display_mode.height, display_mode.fps, display_mode.group);
+
+    ret = ioctl(mDisplayFd, EXYNOS_SET_DISPLAY_MODE, &display_mode);
+
+    if (ret < 0) {
         ALOGE("%s EXYNOS_SET_DISPLAY_MODE failed errno : %d, ret: %d", __func__, errno, ret);
     }
 #endif
