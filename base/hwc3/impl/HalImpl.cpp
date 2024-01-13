@@ -107,7 +107,7 @@ HalImpl::HalImpl(std::unique_ptr<ExynosDevice> device) : mDevice(std::move(devic
     mHwcCtx->device = mDevice.get();
 
     auto hwcService = ::android::ExynosHWCService::getExynosHWCService();
-    hwcService->setExynosHWCCtx(mHwcCtx.get());
+    hwcService->setExynosDevice(mHwcCtx->device);
     // This callback is for DP hotplug event if connected
     // hwcService->setBootFinishedCallback(...);
 #endif
