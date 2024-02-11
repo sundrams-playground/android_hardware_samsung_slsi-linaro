@@ -15,45 +15,45 @@
 
 ifeq ($(BOARD_USES_HWC_SERVICES),true)
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hw.use_hwc_services=1
+	ro.vendor.hw.use_hwc_services=1
 endif
 
 ifeq ($(BOARD_USES_VIRTUAL_DISPLAY), true)
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hw.use_virtual_display=1
+	ro.vendor.hw.use_virtual_display=1
 endif
 
 ifeq ($(BOARD_USES_DISABLE_COMPOSITIONTYPE_GLES),true)
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hw.use_disable_composition_type_gles=1
+	ro.vendor.hw.use_disable_composition_type_gles=1
 endif
 
 ifeq ($(BOARD_USES_SECURE_ENCODER_ONLY),true)
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hw.use_secure_encoder_only=1
+	ro.vendor.hw.use_secure_encoder_only=1
 endif
 
 ifeq ($(BOARD_USES_CONTIG_MEMORY_FOR_SCRATCH_BUF),true)
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hw.use_contig_memory_for_scratch_buf=1
+	ro.vendor.hw.use_contig_memory_for_scratch_buf=1
 endif
 
 ifeq ($(BOARD_USES_SURFACE_YUV),true)
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hw.use_surface_yuv=1
+	ro.vendor.hw.use_surface_yuv=1
 endif
 
 ifeq ($(BOARD_USES_HDRUI_GLES_CONVERSION),true)
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hw.use_hdrui_gles_conversion=1
+	ro.vendor.hw.use_hdrui_gles_conversion=1
 endif
 
 ifeq ($(BOARD_USES_HWC_CPU_PERF_MODE),true)
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hw.use_hwc_cpu_perf_mode=1
+	ro.vendor.hw.use_hwc_cpu_perf_mode=1
 endif
 
 ifeq ($(BOARD_USES_DP_VSYNC_FEATURE),true)
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.hw.use_dp_vsync_feature=1
+    ro.vendor.hw.use_dp_vsync_feature=1
 endif
